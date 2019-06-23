@@ -537,13 +537,13 @@ else
         \
         --disable-demuxers \
         --disable-muxers \
-        --enable-demuxer='aac,avi,dnxhd,flac,flv,gif,h261,h263,h264,image2,matroska,webm,mov,mp3,mp4,mpeg,ogg,srt,wav,webvtt,gif,image2,image2pipe,mjpeg' \
+        --enable-demuxer='aac,ape,avi,dnxhd,flac,flv,gif,h261,h263,h264,image2,matroska,webm,mov,mp3,mp4,mpeg,ogg,srt,wav,webvtt,gif,image2,image2pipe,mjpeg' \
         --enable-muxer='3gp,dnxhd,flac,flv,gif,image2,matroska,webm,mov,mp3,mp4,mpeg,ogg,opus,srt,wav,webvtt,ipod,gif,image2,image2pipe,mjpeg' \
         \
         --disable-encoders \
         --disable-decoders \
         --enable-encoder='aac,dnxhd,flac,flv,gif,libmp3lame,libopus,libshine,libvorbis,mpeg4,png,mjpeg,gif,srt,subrip,webvtt' \
-        --enable-decoder='aac,aac_at,aac_fixed,aac_latm,dnxhd,flac,flv,h261,h263,h263i,h263p,h264,vp8,vp9,libopus,libvorbis,mp3,mpeg4,wavpack,png,mjpeg,gif,pcm_s16le,pcm_s16be,rawvideo,srt,webvtt' \
+        --enable-decoder='aac,aac_at,aac_fixed,aac_latm,alac,ape,dnxhd,flac,flv,h261,h263,h263i,h263p,h264,vp8,vp9,libopus,libvorbis,mp3,mpeg4,wavpack,png,mjpeg,gif,pcm_s16le,pcm_s16be,rawvideo,srt,webvtt' \
         \
         --enable-libshine \
         --enable-libmp3lame \
