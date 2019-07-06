@@ -537,7 +537,7 @@ else
         \
         --disable-demuxers \
         --disable-muxers \
-        --enable-demuxer='aac,ac3,aiff,ape,avi,dnxhd,flac,flv,gif,h261,h263,h264,image2,matroska,webm,mov,mp3,mp4,mpeg,ogg,pcm_alaw,pcm_mulaw,pcm_f64be,pcm_f64le,pcm_f32be,pcm_f32le,pcm_s32be,pcm_s32le,pcm_s24be,pcm_s24le,pcm_s16be,pcm_s16le,pcm_s8,pcm_u32be,pcm_u32le,pcm_u24be,pcm_u24le,pcm_u16be,pcm_u16le,pcm_u8,srt,wav,webvtt,gif,image2,image2pipe,mjpeg,xwma' \
+        --enable-demuxer='aac,ac3,aiff,ape,avi,dsf,dnxhd,flac,flv,gif,h261,h263,h264,image2,matroska,webm,m4v,mov,mp3,mp4,mpeg,ogg,pcm_alaw,pcm_mulaw,pcm_f64be,pcm_f64le,pcm_f32be,pcm_f32le,pcm_s32be,pcm_s32le,pcm_s24be,pcm_s24le,pcm_s16be,pcm_s16le,pcm_s8,pcm_u32be,pcm_u32le,pcm_u24be,pcm_u24le,pcm_u16be,pcm_u16le,pcm_u8,srt,wav,webvtt,gif,image2,image2pipe,mjpeg,xwma' \
         --enable-muxer='3gp,dnxhd,flac,flv,gif,image2,matroska,webm,mov,mp3,mp4,mpeg,ogg,opus,srt,wav,webvtt,ipod,gif,image2,image2pipe,mjpeg' \
         \
         --disable-encoders \
