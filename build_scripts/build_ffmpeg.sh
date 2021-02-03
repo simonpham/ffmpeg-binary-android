@@ -36,6 +36,7 @@ else
     ARM_SYSROOT=$NDK/platforms/android-21/arch-arm/
     X86_SYSROOT=$NDK/platforms/android-21/arch-x86/
 fi
+LLVM_PREBUILT=$NDK/toolchains/llvm/prebuilt/$OS
 ARM_PREBUILT=$NDK/toolchains/arm-linux-androideabi-4.9/prebuilt/$OS
 X86_PREBUILT=$NDK/toolchains/x86-4.9/prebuilt/$OS
 
@@ -67,7 +68,7 @@ else
     echo "Using existing `pwd`/ffmpeg-${FFMPEG_VERSION}"
 fi
 
-LIBX264_VERSION="snapshot-20171130-2245"
+LIBX264_VERSION="snapshot-20191217-2245"
 if [ ! -d "x264-$LIBX264_VERSION" ]; then
     echo "Downloading x264-$LIBX264_VERSION"
     curl -O "ftp://ftp.videolan.org/pub/videolan/x264/snapshots/x264-$LIBX264_VERSION.tar.bz2"
@@ -76,7 +77,7 @@ else
     echo "Using existing `pwd`/x264-$LIBX264_VERSION"
 fi
 
-OPUS_VERSION="1.1.5"
+OPUS_VERSION="1.3.1"
 if [ ! -d "opus-${OPUS_VERSION}" ]; then
     echo "Downloading opus-${OPUS_VERSION}"
     curl -LO https://archive.mozilla.org/pub/opus/opus-${OPUS_VERSION}.tar.gz
@@ -85,7 +86,7 @@ else
     echo "Using existing `pwd`/opus-${OPUS_VERSION}"
 fi
 
-FDK_AAC_VERSION="0.1.5"
+FDK_AAC_VERSION="2.0.1"
 if [ ! -d "fdk-aac-${FDK_AAC_VERSION}" ]; then
     echo "Downloading fdk-aac-${FDK_AAC_VERSION}"
     curl -LO http://downloads.sourceforge.net/opencore-amr/fdk-aac-${FDK_AAC_VERSION}.tar.gz
@@ -94,8 +95,8 @@ else
     echo "Using existing `pwd`/fdk-aac-${FDK_AAC_VERSION}"
 fi
 
-LAME_MAJOR="3.99"
-LAME_VERSION="3.99.5"
+LAME_MAJOR="3.100"
+LAME_VERSION="3.100"
 if [ ! -d "lame-${LAME_VERSION}" ]; then
     echo "Downloading lame-${LAME_VERSION}"
     curl -LO http://downloads.sourceforge.net/project/lame/lame/${LAME_MAJOR}/lame-${LAME_VERSION}.tar.gz
@@ -113,7 +114,7 @@ else
     echo "Using existing `pwd`/shine"
 fi
 
-LIBOGG_VERSION="1.3.2"
+LIBOGG_VERSION="1.3.4"
 if [ ! -d "libogg-${LIBOGG_VERSION}" ]; then
     echo "Downloading libogg-${LIBOGG_VERSION}"
     curl -LO http://downloads.xiph.org/releases/ogg/libogg-${LIBOGG_VERSION}.tar.gz
@@ -122,7 +123,7 @@ else
     echo "Using existing `pwd`/libogg-${LIBOGG_VERSION}"
 fi
 
-LIBVORBIS_VERSION="1.3.4"
+LIBVORBIS_VERSION="1.3.7"
 if [ ! -d "libvorbis-${LIBVORBIS_VERSION}" ]; then
     echo "Downloading libvorbis-${LIBVORBIS_VERSION}"
     curl -LO http://downloads.xiph.org/releases/vorbis/libvorbis-${LIBVORBIS_VERSION}.tar.gz
@@ -140,7 +141,7 @@ fi
 #     echo "Using existing `pwd`/libvpx-${LIBVPX_VERSION}"
 # fi
 
-LIBFREETYPE_VERSION="2.9"
+LIBFREETYPE_VERSION="2.10.4"
 if [ ! -d "freetype-${LIBFREETYPE_VERSION}" ]; then
     echo "Downloading freetype-${LIBFREETYPE_VERSION}"
     curl -LO https://download.savannah.gnu.org/releases/freetype/freetype-${LIBFREETYPE_VERSION}.tar.gz
@@ -149,7 +150,7 @@ else
     echo "Using existing `pwd`/freetype-${LIBFREETYPE_VERSION}"
 fi
 
-EXPAT_VERSION="2.2.3"
+EXPAT_VERSION="2.2.10"
 if [ ! -d "expat-${EXPAT_VERSION}" ]; then
     echo "Downloading expat-${EXPAT_VERSION}"
     curl -LO http://downloads.sourceforge.net/project/expat/expat/${EXPAT_VERSION}/expat-${EXPAT_VERSION}.tar.bz2
@@ -167,7 +168,7 @@ else
     echo "Using existing `pwd`/libuuid-${LIBUUID_VERSION}"
 fi
 
-LIBFONTCONFIG_VERSION="2.13.0"
+LIBFONTCONFIG_VERSION="2.13.93"
 if [ ! -d "fontconfig-${LIBFONTCONFIG_VERSION}" ]; then
     echo "Downloading fontconfig-${LIBFONTCONFIG_VERSION}"
     curl -LO https://www.freedesktop.org/software/fontconfig/release/fontconfig-${LIBFONTCONFIG_VERSION}.tar.gz
@@ -176,7 +177,7 @@ else
     echo "Using existing `pwd`/fontconfig-${LIBFONTCONFIG_VERSION}"
 fi
 
-GETTEXT_VERSION="0.19.8.1"
+GETTEXT_VERSION="0.21"
 if [ ! -d "gettext-${GETTEXT_VERSION}" ]; then
     echo "Downloading gettext-${GETTEXT_VERSION}"
     curl -LO http://ftp.gnu.org/pub/gnu/gettext/gettext-${GETTEXT_VERSION}.tar.gz
@@ -185,7 +186,7 @@ else
     echo "Using existing `pwd`/gettext-${GETTEXT_VERSION}"
 fi
 
-LIBPNG_VERSION="1.6.34"
+LIBPNG_VERSION="1.6.37"
 if [ ! -d "libpng-${LIBPNG_VERSION}" ]; then
     echo "Downloading libpng-${LIBPNG_VERSION}"
     curl -LO https://downloads.sourceforge.net/project/libpng/libpng16/${LIBPNG_VERSION}/libpng-${LIBPNG_VERSION}.tar.xz
@@ -247,21 +248,25 @@ then
     HOST=arm-linux-androideabi
     CROSS_PREFIX=$ARM_PREBUILT/bin/$HOST-
     OPTIMIZE_CFLAGS="$OPTIMIZE_CFLAGS "
+    LLVM_PREBUILT_PREFIX=$LLVM_PREBUILT/bin/$HOST-
 elif [ $ARCH == "arm64" ]
 then
     SYSROOT=$ARM64_SYSROOT
     HOST=aarch64-linux-android
     CROSS_PREFIX=$ARM64_PREBUILT/bin/$HOST-
+    LLVM_PREBUILT_PREFIX=$LLVM_PREBUILT/bin/$HOST-
 elif [ $ARCH == "x86_64" ]
 then
     SYSROOT=$X86_64_SYSROOT
     HOST=x86_64-linux-android
     CROSS_PREFIX=$X86_64_PREBUILT/bin/$HOST-
+    LLVM_PREBUILT_PREFIX=$LLVM_PREBUILT/bin/$HOST-
 elif [ $ARCH == "i686" ]
 then
     SYSROOT=$X86_SYSROOT
     HOST=i686-linux-android
     CROSS_PREFIX=$X86_PREBUILT/bin/$HOST-
+    LLVM_PREBUILT_PREFIX=$LLVM_PREBUILT/bin/$HOST-
 # elif [ $ARCH == "mips" ]
 # then
 #     SYSROOT=$MIPS_SYSROOT
@@ -276,6 +281,7 @@ then
 fi
 
 export PKG_CONFIG_PATH="$PREFIX/lib/pkgconfig"
+export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH"
 export CPP="${CROSS_PREFIX}cpp"
 export CXX="${CROSS_PREFIX}g++"
 export CC="${CROSS_PREFIX}gcc"
@@ -410,7 +416,7 @@ pushd opus-${OPUS_VERSION}
 
 make clean
 make -j8
-make install V=1
+make OPUS_CFLAGS="-DUSE_CODEC_OPUS=1 -I${DEPS}/opus/include" OPUS_LIBS="-L${DEPS}/opus/lib -lopus" install V=1
 popd
 
 pushd lame-${LAME_VERSION}
@@ -498,7 +504,6 @@ if [ "$FLAVOR" = "full" ]; then
         --enable-ffmpeg \
         --disable-ffplay \
         --disable-ffprobe \
-        --disable-ffserver \
         \
         --enable-libshine \
         --enable-libmp3lame \
@@ -507,9 +512,6 @@ if [ "$FLAVOR" = "full" ]; then
         --enable-libx264 \
         --enable-libfdk-aac \
         --enable-bsf=aac_adtstoasc \
-        --enable-openssl \
-        --enable-libfreetype  \
-        --enable-libfontconfig \
         --enable-zlib \
         \
         --disable-doc \
@@ -530,7 +532,6 @@ else
         --enable-ffmpeg \
         --disable-ffplay \
         --disable-ffprobe \
-        --disable-ffserver \
         \
         --disable-protocols \
         --enable-protocol='file,pipe' \
